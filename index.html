@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anugerah Perkhidmatan Cemerlang 2025</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background: #8d641c;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.slides {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 35px;
+  text-align: center;
+  background:
+    radial-gradient(ellipse at center, #f9dfa0 0%, #c99a43 45%, #70430e 100%);
+  position: relative;
+}
+.slides::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("https://www.transparenttextures.com/patterns/gold-scale.png");
+  opacity: .22;
+  pointer-events: none;
+}
+.content { position: relative; z-index: 1; }
+.photo {
+  width: min(38vw, 390px);
+  height: min(48vh, 430px);
+  object-fit: cover;
+  border: 7px solid #fce8b1;
+  border-radius: 14px;
+  box-shadow: 0 12px 45px #3c230a88;
+}
+.name {
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: bold;
+  color: #fff8e5;
+  text-shadow: 2px 3px 8px #593600;
+  margin-top: 25px;
+}
+.controls {
+  position: fixed;
+  bottom: 18px;
+  display: flex;
+  gap: 12px;
+  z-index: 5;
+}
+button {
+  padding: 12px 20px;
+  border: 1px solid #fff0c5;
+  border-radius: 8px;
+  background: #593b13dd;
+  color: white;
+  cursor: pointer;
+}
+@media(max-width:600px) {
+  .photo { width: 75vw; height: 42vh; }
+}
+</style>
+</head>
+<body>
+<div class="slides">
+  <div class="content">
+    <img class="photo" id="photo" src="https://placehold.co/600x750/8c682d/ffffff?text=Gambar+Penerima" alt="Gambar penerima">
+    <div class="name" id="name">NAMA PENERIMA</div>
+  </div>
+</div>
+<div class="controls">
+  <button onclick="previous()">Sebelum</button>
+  <button onclick="togglePlay()" id="play">Henti</button>
+  <button onclick="next()">Seterusnya</button>
+  <button onclick="document.documentElement.requestFullscreen()">Skrin Penuh</button>
+</div>
+<script>
+const recipients = [
+  {
+    name: "NAMA PENERIMA",
+    photo: "https://placehold.co/600x750/8c682d/ffffff?text=Gambar+Penerima"
+  }
+];
+
+let current = 0;
+let timer;
+let playing = true;
+
+function showSlide() {
+  document.getElementById("name").textContent = recipients[current].name;
+  document.getElementById("photo").src = recipients[current].photo;
+}
+
+function next() {
+  current = (current + 1) % recipients.length;
+  showSlide();
+}
+
+function previous() {
+  current = (current - 1 + recipients.length) % recipients.length;
+  showSlide();
+}
+
+function start() {
+  clearInterval(timer);
+  timer = setInterval(next, 8000);
+}
+
+function togglePlay() {
+  playing = !playing;
+  document.getElementById("play").textContent = playing ? "Henti" : "Mula";
+  if (playing) start();
+  else clearInterval(timer);
+}
+
+showSlide();
+start();
+</script>
+</body>
+</html>
